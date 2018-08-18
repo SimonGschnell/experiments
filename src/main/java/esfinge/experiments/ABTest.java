@@ -1,8 +1,11 @@
 package esfinge.experiments;
 
-public interface ABTest<T> {
+public interface ABTest {
 
-    public T aTest();
+    Object execute() throws Exception;
 
-    public T bTest();
+    Object aTest() throws Exception;
+
+    Object bTest() throws Exception;
+
 }

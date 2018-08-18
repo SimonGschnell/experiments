@@ -1,10 +1,10 @@
 
-import esfinge.experiments.ABTest;
 import esfinge.experiments.PerformanceMetrics;
 import java.util.Random;
+import esfinge.experiments.ABTestUser;
 
 @PerformanceMetrics
-public class PerformanceExperiment implements ABTest {
+public class PerformanceExperiment implements ABTestUser<String> {
 
     private final int array_size = 200_000;
     private final int[] array = new int[array_size];

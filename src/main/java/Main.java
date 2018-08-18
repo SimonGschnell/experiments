@@ -1,26 +1,19 @@
 
 import esfinge.experiments.ABTestSelectRandom;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main {
 
-    public static void main(String[] args) {
-
-        PerformanceExperiment userExperiment = new PerformanceExperiment();
-
-        ABTestSelectRandom abTest = new ABTestSelectRandom(userExperiment);
-
+    public static void main(String[] args) throws Exception {
+        PerformanceExperiment experiment = new PerformanceExperiment();
+        ABTestSelectRandom abTest = new ABTestSelectRandom(experiment);
         simulateCalls(abTest);
     }
 
-    public static void simulateCalls(ABTestSelectRandom abTest) {
+    public static void simulateCalls(ABTestSelectRandom abTest) throws Exception {
         for (int i = 0; i < 10; i++) {
-            try {
-                System.out.println(abTest.selectUsers());
-            } catch (Exception ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            //Resultado da execução randômica dos métodos aTest e bTest
+            Object result = abTest.execute();
+            System.out.println(result);
         }
     }
 

@@ -4,46 +4,50 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.Random;
 
-public class ABTestSelectRandom implements ABTestMetrics {
+public class ABTestSelectRandom implements ABTest {
 
-    private final ABTest userExperiment;
+    private final ABTestUser userExperiment;
 
-    public ABTestSelectRandom(ABTest userExperiment) {
+    public ABTestSelectRandom(ABTestUser userExperiment) {
         this.userExperiment = userExperiment;
     }
 
     @Override
-    public Object selectUsers() throws Exception {
+    public Object execute() throws Exception {
+        //TODO: criar um ponto de extensão para selecionar usuários
         if ((new Random()).nextInt(10) < 5) {
-            return aTestMetrics();
+            return aTest();
         } else {
-            return bTestMetrics();
+            return bTest();
         }
     }
 
     @Override
-    public Object aTestMetrics() throws Exception {
-        return testMetrics("aTest");
+    public Object aTest() throws Exception {
+        return executeWithMetrics("aTest");
     }
 
     @Override
-    public Object bTestMetrics() throws Exception {
-        return testMetrics("bTest");
+    public Object bTest() throws Exception {
+        return executeWithMetrics("bTest");
     }
 
-    private Object testMetrics(String methodName) throws Exception {
-        Class<? extends ABTest> clazz = userExperiment.getClass();
+    private Object executeWithMetrics(String methodName) throws Exception {
+        Class<? extends ABTestUser> clazz = userExperiment.getClass();
+        Method method = clazz.getMethod(methodName);
         for (Annotation an : clazz.getAnnotations()) {
             Class<?> anType = an.annotationType();
             if (anType.isAnnotationPresent(MetricsGenerator.class)) {
                 MetricsGenerator fi = anType.getAnnotation(MetricsGenerator.class);
                 Class<? extends Metrics> c = fi.value();
                 Metrics m = c.newInstance();
-                Method method = clazz.getMethod(methodName);
                 return m.getMetrics(userExperiment, method);
+
             }
         }
-        return "This experiment has no metrics.";
+        System.out.println("The " + clazz.getName() + " class has no metrics generator.");
+        return method.invoke(userExperiment);
+
     }
 
 }
