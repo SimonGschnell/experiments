@@ -8,16 +8,17 @@ public class MemoryMetricsGenerator implements Metrics {
     private Runtime runtime;
 
     @Override
-    public void startCapture(Method method) {
+    public void startCapture(Method method, Class abTestSelectorClass) {
         runtime = Runtime.getRuntime();
         usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory();
-        //result = method.getName() + " => Used memory before: " + usedMemoryBefore / 1024.0d + " KB. ";
     }
 
     @Override
-    public void finishCapture(Method method) {
+    public void finishCapture(Method method, Class abTestSelectorClass) {
         long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
-        //result += "Memory increased: " + (usedMemoryAfter - usedMemoryBefore) / 1024.0d + " KB.";
+        String result = usedMemoryAfter - usedMemoryBefore + " bytes";
+        MetricResult mr = extractMetricResult(method, abTestSelectorClass, result);
+        MetricRecording.getInstance().write(mr);
     }
 
 }
