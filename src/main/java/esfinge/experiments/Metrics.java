@@ -1,9 +1,11 @@
 package esfinge.experiments;
 
+import java.lang.reflect.Method;
+
 public interface Metrics {
 
-    void preInvoke(String methodName);
+    void startCapture(Method method);
 
-    void postInvoke(String methodName);
+    void finishCapture(Method method);
 
 }

@@ -15,14 +15,12 @@ public class SortingExperiment implements ABTestUser<int[]> {
 
     @Override
     public int[] aTest() {
-        int[] array = this.initialArray.clone();
-        return SortingUtil.insertionSort(array);
+        return SortingUtil.insertionSort(initialArray.clone());
     }
 
     @Override
     public int[] bTest() {
-        int[] array = this.initialArray.clone();
-        return SortingUtil.heapSort(array);
+        return SortingUtil.heapSort(initialArray.clone());
     }
 
 }

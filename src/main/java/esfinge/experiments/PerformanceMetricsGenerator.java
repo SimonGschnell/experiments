@@ -1,5 +1,6 @@
 package esfinge.experiments;
 
+import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.Instant;
 
@@ -8,16 +9,15 @@ public class PerformanceMetricsGenerator implements Metrics {
     private Instant start;
 
     @Override
-    public void preInvoke(String methodName) {
+    public void startCapture(Method method) {
         start = Instant.now();
     }
 
     @Override
-    public void postInvoke(String methodName) {
+    public void finishCapture(Method method) {
         Instant end = Instant.now();
         Duration duration = Duration.between(start, end);
         double time = duration.toMillis() / 1000.0d;
-        String metrics = methodName + " => finalized in " + time + " seconds.";
-        System.out.println(metrics);
+        String metrics = method.getName() + " => finalized in " + time + " seconds.";
     }
 }

@@ -1,23 +1,23 @@
 package esfinge.experiments;
 
+import java.lang.reflect.Method;
+
 public class MemoryMetricsGenerator implements Metrics {
 
     private long usedMemoryBefore;
-    private String resultStr;
     private Runtime runtime;
 
     @Override
-    public void preInvoke(String methodName) {
+    public void startCapture(Method method) {
         runtime = Runtime.getRuntime();
         usedMemoryBefore = runtime.totalMemory() - runtime.freeMemory();
-        resultStr = methodName + " => Used memory before: " + usedMemoryBefore / 1000.0d + " KB. ";
+        //result = method.getName() + " => Used memory before: " + usedMemoryBefore / 1024.0d + " KB. ";
     }
 
     @Override
-    public void postInvoke(String methodName) {
+    public void finishCapture(Method method) {
         long usedMemoryAfter = runtime.totalMemory() - runtime.freeMemory();
-        resultStr += "Memory increased: " + (usedMemoryAfter - usedMemoryBefore) / 1000.0d + " KB.";
-        System.out.println(resultStr);
+        //result += "Memory increased: " + (usedMemoryAfter - usedMemoryBefore) / 1024.0d + " KB.";
     }
 
 }

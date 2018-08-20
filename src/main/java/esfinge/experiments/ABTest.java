@@ -34,9 +34,9 @@ public interface ABTest<T> {
             }
         }
 
-        metrics.forEach(metric -> metric.preInvoke(methodName));
+        metrics.forEach(metric -> metric.startCapture(method));
         T methodResult = (T) (method.invoke(userExperiment));
-        metrics.forEach(metric -> metric.postInvoke(methodName));
+        metrics.forEach(metric -> metric.finishCapture(method));
 
         return methodResult;
 

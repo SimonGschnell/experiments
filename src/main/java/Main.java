@@ -13,13 +13,11 @@ public class Main {
 
         SortingExperiment userExperiment = new SortingExperiment(createSimulateInput());
 
-        System.out.println("=> ABTestSelectRandom");
         ABTestSelectRandom<int[]> abTestSelectRandom = new ABTestSelectRandom(userExperiment);
         for (int i = 0; i < 10; i++) {
             int[] result = abTestSelectRandom.execute();
         }
 
-        System.out.println("\n=> ABTestSelectPercentage");
         ABTestSelectPercentage<int[]> abTestSelectPercentage = new ABTestSelectPercentage(userExperiment, 20, 10);
         for (int i = 0; i < 10; i++) {
             int[] result = abTestSelectPercentage.execute();
