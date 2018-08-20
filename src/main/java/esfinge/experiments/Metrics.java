@@ -1,9 +1,9 @@
 package esfinge.experiments;
 
-import java.lang.reflect.Method;
+public interface Metrics {
 
-public interface Metrics<T> {
+    void preInvoke(String methodName);
 
-    T executeWithMetrics(ABTestUser userExperiment, Method method) throws Exception;
+    void postInvoke(String methodName);
 
 }

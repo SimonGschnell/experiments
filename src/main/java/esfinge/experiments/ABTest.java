@@ -2,6 +2,8 @@ package esfinge.experiments;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 public interface ABTest<T> {
 
@@ -21,17 +23,23 @@ public interface ABTest<T> {
         ABTestUser userExperiment = getUserExperiment();
         Class<? extends ABTestUser> clazz = userExperiment.getClass();
         Method method = clazz.getMethod(methodName);
+        List<Metrics> metrics = new ArrayList<>();
+
         for (Annotation an : clazz.getAnnotations()) {
             Class<?> anType = an.annotationType();
             if (anType.isAnnotationPresent(MetricsGenerator.class)) {
                 MetricsGenerator fi = anType.getAnnotation(MetricsGenerator.class);
                 Class<? extends Metrics> c = fi.value();
-                Metrics<T> m = c.newInstance();
-                return m.executeWithMetrics(userExperiment, method);
+                metrics.add(c.newInstance());
             }
         }
-        System.out.println("The " + clazz.getName() + " class has no metrics generator.");
-        return (T) (method.invoke(userExperiment));
+
+        metrics.forEach(metric -> metric.preInvoke(methodName));
+        T methodResult = (T) (method.invoke(userExperiment));
+        metrics.forEach(metric -> metric.postInvoke(methodName));
+
+        return methodResult;
+
     }
 
 }

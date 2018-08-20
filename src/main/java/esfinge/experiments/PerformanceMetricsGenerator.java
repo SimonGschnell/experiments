@@ -1,24 +1,23 @@
 package esfinge.experiments;
 
-import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.Instant;
 
 public class PerformanceMetricsGenerator implements Metrics {
 
+    private Instant start;
+
     @Override
-    public Object executeWithMetrics(ABTestUser userExperiment, Method method) throws Exception {
-        Instant start = Instant.now();
+    public void preInvoke(String methodName) {
+        start = Instant.now();
+    }
 
-        Object methodResult = method.invoke(userExperiment);
-
+    @Override
+    public void postInvoke(String methodName) {
         Instant end = Instant.now();
         Duration duration = Duration.between(start, end);
         double time = duration.toMillis() / 1000.0d;
-        String metrics = method.getName() + " finalized in " + time + " seconds.";
+        String metrics = methodName + " => finalized in " + time + " seconds.";
         System.out.println(metrics);
-
-        return methodResult;
     }
-
 }

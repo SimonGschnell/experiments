@@ -1,8 +1,10 @@
 
 import esfinge.experiments.ABTestUser;
+import esfinge.experiments.MemoryMetrics;
 import esfinge.experiments.PerformanceMetrics;
 
 @PerformanceMetrics
+@MemoryMetrics
 public class SortingExperiment implements ABTestUser<int[]> {
 
     private final int[] initialArray;
