@@ -1,11 +1,37 @@
 package esfinge.experiments;
 
-public interface ABTest {
+import java.lang.annotation.Annotation;
+import java.lang.reflect.Method;
 
-    Object execute() throws Exception;
+public interface ABTest<T> {
 
-    Object aTest() throws Exception;
+    ABTestUser getUserExperiment();
 
-    Object bTest() throws Exception;
+    T execute() throws Exception;
+
+    public default T aTest() throws Exception {
+        return executeWithMetrics("aTest");
+    }
+
+    public default T bTest() throws Exception {
+        return executeWithMetrics("bTest");
+    }
+
+    public default T executeWithMetrics(String methodName) throws Exception {
+        ABTestUser userExperiment = getUserExperiment();
+        Class<? extends ABTestUser> clazz = userExperiment.getClass();
+        Method method = clazz.getMethod(methodName);
+        for (Annotation an : clazz.getAnnotations()) {
+            Class<?> anType = an.annotationType();
+            if (anType.isAnnotationPresent(MetricsGenerator.class)) {
+                MetricsGenerator fi = anType.getAnnotation(MetricsGenerator.class);
+                Class<? extends Metrics> c = fi.value();
+                Metrics<T> m = c.newInstance();
+                return m.executeWithMetrics(userExperiment, method);
+            }
+        }
+        System.out.println("The " + clazz.getName() + " class has no metrics generator.");
+        return (T) (method.invoke(userExperiment));
+    }
 
 }

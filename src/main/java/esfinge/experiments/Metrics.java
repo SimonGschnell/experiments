@@ -2,8 +2,8 @@ package esfinge.experiments;
 
 import java.lang.reflect.Method;
 
-public interface Metrics {
+public interface Metrics<T> {
 
-    Object getMetrics(ABTestUser userExperiment, Method method) throws Exception;
+    T executeWithMetrics(ABTestUser userExperiment, Method method) throws Exception;
 
 }

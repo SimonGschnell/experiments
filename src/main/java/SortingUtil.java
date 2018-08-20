@@ -1,7 +1,7 @@
 
-public class SortMethods {
+public class SortingUtil {
 
-    public static String insertionSort(int[] arr) {
+    public static int[] insertionSort(final int[] arr) {
         int n = arr.length;
         for (int i = 1; i < n; ++i) {
             int key = arr[i];
@@ -12,27 +12,26 @@ public class SortMethods {
             }
             arr[j + 1] = key;
         }
-        return "Insertion sort implementation.";
+        return arr;
     }
 
-    public static String heapSort(int[] arr) {
+    public static int[] heapSort(final int[] arr) {
         buildMaxHeap(arr);
         int n = arr.length;
         for (int i = arr.length - 1; i > 0; i--) {
             swap(arr, i, 0);
             maxHeapify(arr, 0, --n);
         }
-        return "Heap sort implementation.";
+        return arr;
     }
 
-    public static String quickSort(int[] arr, int begin, int end) {
+    public static int[] quickSort(final int[] arr, final int begin, final int end) {
         if (begin < end) {
             int meio = partition(arr, begin, end);
             quickSort(arr, begin, meio);
             quickSort(arr, meio + 1, end);
         }
-        return "Quick sort implementation.";
-
+        return arr;
     }
 
     private static int partition(int arr[], int begin, int end) {
