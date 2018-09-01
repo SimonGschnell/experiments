@@ -4,13 +4,17 @@ import java.lang.reflect.Method;
 
 public interface Metrics {
 
-    void startCapture(Method method, Class abTestSelectorClass);
+    MetricRecorder getMetricRecorder();
 
-    void finishCapture(Method method, Class abTestSelectorClass);
+    void setMetricRecorder(MetricRecorder metricRecorder);
 
-    default MetricResult extractMetricResult(Method method, Class abTestSelectorClass, String result) {
-        String metricName = getClass().getSimpleName();
-        String selector = abTestSelectorClass.getSimpleName();
+    void startCapture(Method method, Class selectorClas) throws Exception;
+
+    void finishCapture(Method method, Class selectorClass) throws Exception;
+
+    default MetricResult extractMetricResult(Method method, Class selectorClass, String result) {
+        String metricName = getClass().getSimpleName().replace("Generator", "");
+        String selector = selectorClass.getSimpleName();
         String userClass = method.getDeclaringClass().getName();
         String userMethod = method.getName();
         return new MetricResult(metricName, selector, userClass, userMethod, result);

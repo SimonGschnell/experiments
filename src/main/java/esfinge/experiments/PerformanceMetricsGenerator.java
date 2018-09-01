@@ -6,19 +6,30 @@ import java.time.Instant;
 
 public class PerformanceMetricsGenerator implements Metrics {
 
+    private MetricRecorder metricRecorder;
     private Instant startExecution;
 
     @Override
-    public void startCapture(Method method, Class abTestSelectorClass) {
+    public MetricRecorder getMetricRecorder() {
+        return metricRecorder;
+    }
+
+    @Override
+    public void setMetricRecorder(MetricRecorder metricRecorder) {
+        this.metricRecorder = metricRecorder;
+    }
+
+    @Override
+    public void startCapture(Method method, Class selector) throws Exception {
         startExecution = Instant.now();
     }
 
     @Override
-    public void finishCapture(Method method, Class abTestSelectorClass) {
+    public void finishCapture(Method method, Class selector) throws Exception {
         Duration duration = Duration.between(startExecution, Instant.now());
         String result = duration.toMillis() / 1000.0d + " seconds";
-        MetricResult mr = extractMetricResult(method, abTestSelectorClass, result);
-        MetricRecording.getInstance().write(mr);
+        MetricResult mr = extractMetricResult(method, selector, result);
+        metricRecorder.write(mr);
     }
 
 }

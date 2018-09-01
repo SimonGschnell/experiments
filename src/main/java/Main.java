@@ -1,35 +1,25 @@
 
-import esfinge.experiments.ABTestSelectPercentage;
-import esfinge.experiments.ABTestSelectRandom;
-import java.util.Random;
+import esfinge.experiments.ABTest;
+import esfinge.experiments.ABTestBuilder;
+import esfinge.experiments.MetricRecorderLogger;
+import esfinge.experiments.SelectorRandom;
 
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        simulateCalls();
-    }
 
-    public static void simulateCalls() throws Exception {
+        ABTestBuilder<Ordenador, int[]> abTestBuilder = new ABTestBuilder<>();
 
-        SortingExperiment userExperiment = new SortingExperiment(createSimulateInput());
+        ABTest<Ordenador, int[]> abTest = abTestBuilder.createFor(Ordenador.class).
+                withSelector(new SelectorRandom()).
+                withMetricRecorder(new MetricRecorderLogger()).
+                withATest("insertionSort").
+                withBTest("heapSort").
+                build();
 
-        ABTestSelectRandom<int[]> abTestSelectRandom = new ABTestSelectRandom(userExperiment);
         for (int i = 0; i < 10; i++) {
-            int[] result = abTestSelectRandom.execute();
+            int[] orderlyArray = abTest.run();
         }
-
-        ABTestSelectPercentage<int[]> abTestSelectPercentage = new ABTestSelectPercentage(userExperiment, 20, 10);
-        for (int i = 0; i < 10; i++) {
-            int[] result = abTestSelectPercentage.execute();
-        }
-    }
-
-    private static int[] createSimulateInput() {
-        int[] initialArray = new int[200_000];
-        for (int i = 0; i < initialArray.length; i++) {
-            initialArray[i] = (new Random()).nextInt();
-        }
-        return initialArray;
     }
 
 }

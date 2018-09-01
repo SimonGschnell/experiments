@@ -1,45 +1,81 @@
 package esfinge.experiments;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 
-public interface ABTest<T> {
+public class ABTest<T, R> {
 
-    ABTestUser getUserExperiment();
+    private T userProxy;
+    private Selector selector;
+    String aTestMethodName;
+    String bTestMethodName;
+    private Object[] aTestArguments;
+    private Object[] bTestArguments;
 
-    T execute() throws Exception;
-
-    public default T aTest() throws Exception {
-        return executeWithMetrics("aTest");
+    public T getUserProxy() {
+        return userProxy;
     }
 
-    public default T bTest() throws Exception {
-        return executeWithMetrics("bTest");
+    public void setUserProxy(T userProxy) {
+        this.userProxy = userProxy;
     }
 
-    public default T executeWithMetrics(String methodName) throws Exception {
-        ABTestUser userExperiment = getUserExperiment();
-        Class<? extends ABTestUser> clazz = userExperiment.getClass();
-        Method method = clazz.getMethod(methodName);
-        List<Metrics> metrics = new ArrayList<>();
+    public Selector getSelector() {
+        return selector;
+    }
 
-        for (Annotation an : clazz.getAnnotations()) {
-            Class<?> anType = an.annotationType();
-            if (anType.isAnnotationPresent(MetricsGenerator.class)) {
-                MetricsGenerator fi = anType.getAnnotation(MetricsGenerator.class);
-                Class<? extends Metrics> c = fi.value();
-                metrics.add(c.newInstance());
+    public void setSelector(Selector selector) {
+        this.selector = selector;
+    }
+
+    public String getaTestMethodName() {
+        return aTestMethodName;
+    }
+
+    public void setaTestMethodName(String aTestMethodName) {
+        this.aTestMethodName = aTestMethodName;
+    }
+
+    public String getbTestMethodName() {
+        return bTestMethodName;
+    }
+
+    public void setbTestMethodName(String bTestMethodName) {
+        this.bTestMethodName = bTestMethodName;
+    }
+
+    public Object[] getaTestArguments() {
+        return aTestArguments;
+    }
+
+    public void setaTestArguments(Object[] aTestArguments) {
+        this.aTestArguments = aTestArguments;
+    }
+
+    public Object[] getbTestArguments() {
+        return bTestArguments;
+    }
+
+    public void setbTestArguments(Object[] bTestArguments) {
+        this.bTestArguments = bTestArguments;
+    }
+
+    public R run() throws Exception {
+        R result = null;
+
+        String selectedMethod = selector.select(aTestMethodName, bTestMethodName);
+
+        if (selectedMethod != null) {
+            Object[] arguments = selectedMethod.equals(aTestMethodName) ? aTestArguments : bTestArguments;
+            if (userProxy != null) {
+                Method[] methods = userProxy.getClass().getMethods();
+                for (Method m : methods) {
+                    if (m.getName().equals(selectedMethod)) {
+                        result = (R) m.invoke(userProxy, arguments);
+                        break;
+                    }
+                }
             }
         }
-
-        metrics.forEach(metric -> metric.startCapture(method, getClass()));
-        T methodResult = (T) (method.invoke(userExperiment));
-        metrics.forEach(metric -> metric.finishCapture(method, getClass()));
-
-        return methodResult;
-
+        return result;
     }
-
 }

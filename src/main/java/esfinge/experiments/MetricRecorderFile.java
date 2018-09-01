@@ -9,37 +9,22 @@ import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class MetricRecording {
+public class MetricRecorderFile implements MetricRecorder {
 
-    private static MetricRecording instance;
+    private final String path;
 
-    private MetricRecording() {
+    public MetricRecorderFile(String path) {
+        this.path = path;
     }
 
-    public static MetricRecording getInstance() {
-        if (instance == null) {
-            synchronized (MetricRecording.class) {
-                if (instance == null) {
-                    instance = new MetricRecording();
-                }
-            }
-        }
-        return instance;
-    }
-
+    @Override
     public void write(MetricResult metricResult) {
-
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
         String outDate = dtf.format(Instant.now());
-
-        System.out.println(outDate + " - " + metricResult);
-
-        String path = "metrics.txt";
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path, true), 8192 * 4)) {
             writer.write(outDate + " - " + metricResult + "\n");
         } catch (IOException ex) {
-            Logger.getLogger(MetricRecording.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 }
