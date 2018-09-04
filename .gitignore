@@ -2,3 +2,4 @@ persistence_tests.txt
 /target/
 .project
 .classpath
+.settings
