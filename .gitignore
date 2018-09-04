@@ -1,2 +1,4 @@
-metrics.txt
+persistence_tests.txt
 /target/
+.project
+.classpath

@@ -6,10 +6,9 @@ public class SelectorPercentage implements Selector {
     private final int totalNumOfUsers;
     private int currentNumOfUsers;
 
-    public SelectorPercentage(int percentageA, int totalNumOfUsers, int currentNumOfUsers) {
+    public SelectorPercentage(int percentageA, int totalNumOfUsers) {
         this.percentageA = percentageA;
         this.totalNumOfUsers = totalNumOfUsers;
-        this.currentNumOfUsers = currentNumOfUsers;
     }
 
     @Override
