@@ -1,4 +1,6 @@
 persistence_tests.txt
+metrics.txt
+plots.txt
 /target/
 .project
 .classpath

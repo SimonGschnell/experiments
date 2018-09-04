@@ -61,4 +61,8 @@ public class MetricResult {
         return "MetricResult{" + "metricName=" + metricName + ", selector=" + selector + ", userClass=" + userClass + ", userMethod=" + userMethod + ", result=" + result + '}';
     }
 
+    public String plottingResult() {
+        return userMethod + " " + result;
+    }
+
 }
