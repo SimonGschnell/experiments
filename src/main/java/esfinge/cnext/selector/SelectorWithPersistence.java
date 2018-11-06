@@ -1,4 +1,4 @@
-package esfinge.experiments;
+package esfinge.cnext.selector;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -19,23 +19,32 @@ import org.json.simple.parser.ParseException;
 
 public class SelectorWithPersistence implements Selector {
 
-    private static final String PERSISTENCE_TESTS_FILE = "persistence_tests.txt";
+    private final Selector selector;
+    private HashMap<String, String> previousSelections;
 
-    private final Selector parentSelector;
-    private HashMap<String, String> testsByUser;
+    private String path = "persistence_selections.txt";
 
     public SelectorWithPersistence() {
-        this.parentSelector = new SelectorRandom();
+        this.selector = new SelectorRandom();
+    }
+
+    public SelectorWithPersistence(String path) {
+        this.path = path;
+        this.selector = new SelectorRandom();
     }
 
     public SelectorWithPersistence(Selector parentSelector) {
-        this.parentSelector = parentSelector;
+        this.selector = parentSelector;
+    }
+
+    public SelectorWithPersistence(String path, Selector parentSelector) {
+        this.path = path;
+        this.selector = parentSelector;
     }
 
     private void readData() {
         JSONParser parser = new JSONParser();
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(PERSISTENCE_TESTS_FILE));
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
             String line;
             StringBuilder sb = new StringBuilder();
             String ls = System.getProperty("line.separator");
@@ -43,17 +52,17 @@ public class SelectorWithPersistence implements Selector {
                 sb.append("{").append(line).append("},");
                 sb.append(ls);
             }
-            String tests = "{\"tests\":[" + sb.toString() + "]}";
+            String tests = "{\"selections\":[" + sb.toString() + "]}";
             Object obj = parser.parse(tests);
             JSONObject jsonObject = (JSONObject) obj;
-            JSONArray array = (JSONArray) jsonObject.get("tests");
+            JSONArray array = (JSONArray) jsonObject.get("selections");
             Iterator<JSONObject> iterator = array.iterator();
-            testsByUser = new HashMap<>();
+            previousSelections = new HashMap<>();
             while (iterator.hasNext()) {
                 JSONObject item = iterator.next();
-                String key = (String) item.get("user_id");
-                String value = (String) item.get("test_type");
-                testsByUser.put(key, value);
+                String key = (String) item.get("id");
+                String value = (String) item.get("selected");
+                previousSelections.put(key, value);
 
             }
         } catch (FileNotFoundException ex) {
@@ -64,35 +73,34 @@ public class SelectorWithPersistence implements Selector {
     }
 
     @Override
-    public String select(String aTest, String bTest) {
+    public Class select(Class[] implementations) {
+        Class result = null;
         readData();
+        String id = getIp();
+        String selected = null;
 
-        String user_id = getIp();
-        String testType = null;
-
-        if (testsByUser != null) {
-            testType = testsByUser.get(user_id);
+        if (previousSelections != null) {
+            selected = previousSelections.get(id);
+            try {
+                result = Class.forName(selected);
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(SelectorWithPersistence.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
-        if (testType == null) {
-            if (parentSelector.select(aTest, bTest).equals(aTest)) {
-                testType = "Atest";
-            } else {
-                testType = "Btest";
-            }
+        if (selected == null) {
+            result = selector.select(implementations);
+            selected = result.getName();
+
             String ls = System.getProperty("line.separator");
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(PERSISTENCE_TESTS_FILE, true), 8192 * 4)) {
-                writer.write("\"user_id\":\"" + user_id + "\", \"test_type\":\"" + testType + "\"" + ls);
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(path, true), 8192 * 4)) {
+                writer.write("\"id\":\"" + id + "\", \"selected\":\"" + selected + "\"" + ls);
             } catch (IOException ex) {
                 Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
             }
         }
 
-        if (testType.equals("Atest")) {
-            return aTest;
-        } else {
-            return bTest;
-        }
+        return result;
     }
 
     private String getIp() {

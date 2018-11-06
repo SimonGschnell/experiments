@@ -1,10 +1,10 @@
-package esfinge.experiments;
+package esfinge.cnext.metric;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.Instant;
 
-public class PerformanceMetricsGenerator implements Metrics {
+public class TimeMetricsGenerator implements Metrics {
 
     private MetricRecorder metricRecorder;
     private Instant startExecution;
@@ -20,16 +20,16 @@ public class PerformanceMetricsGenerator implements Metrics {
     }
 
     @Override
-    public void startCapture(Method method, Class selector) throws Exception {
+    public void startRecording(Method method) throws Exception {
         startExecution = Instant.now();
     }
 
     @Override
-    public void finishCapture(Method method, Class selector) throws Exception {
+    public void finishRecording(Method method, String selectorName, String implementation) throws Exception {
         Duration duration = Duration.between(startExecution, Instant.now());
         String result = duration.toMillis() / 1000.0d + " seconds";
-        MetricResult mr = extractMetricResult(method, selector, result);
-        metricRecorder.write(mr);
+        MetricResult mr = extractMetricResult(method, selectorName, implementation, result);
+        metricRecorder.save(mr);
     }
 
 }

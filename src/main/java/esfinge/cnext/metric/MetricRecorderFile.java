@@ -1,4 +1,4 @@
-package esfinge.experiments;
+package esfinge.cnext.metric;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -18,11 +18,11 @@ public class MetricRecorderFile implements MetricRecorder {
     }
 
     @Override
-    public void write(MetricResult metricResult) {
+    public void save(MetricResult metricResult) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.systemDefault());
         String outDate = dtf.format(Instant.now());
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path, true), 8192 * 4)) {
-            writer.write(outDate + " - " + metricResult + "\n");
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path, true), 8192 * 4)) {
+            bw.write(outDate + " - " + metricResult + "\n");
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }

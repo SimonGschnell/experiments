@@ -1,4 +1,4 @@
-package esfinge.experiments;
+package esfinge.cnext.metric;
 
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
@@ -22,7 +22,7 @@ public class MemoryMetricsGenerator implements Metrics {
     }
 
     @Override
-    public void startCapture(Method method, Class selectorClass) throws Exception {
+    public void startRecording(Method method) throws Exception {
         try {
             usedMemoryBefore = getSettledUsedMemory();
         } catch (InterruptedException ex) {
@@ -31,7 +31,7 @@ public class MemoryMetricsGenerator implements Metrics {
     }
 
     @Override
-    public void finishCapture(Method method, Class selectorClass) throws Exception {
+    public void finishRecording(Method method, String selectorName, String implementation) throws Exception {
         long usedMemoryAfter = 0;
         try {
             usedMemoryAfter = getSettledUsedMemory();
@@ -39,8 +39,8 @@ public class MemoryMetricsGenerator implements Metrics {
             Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, ex);
         }
         String result = usedMemoryAfter - usedMemoryBefore + " bytes";
-        MetricResult mr = extractMetricResult(method, selectorClass, result);
-        metricRecorder.write(mr);
+        MetricResult mr = extractMetricResult(method, selectorName, implementation, result);
+        metricRecorder.save(mr);
     }
 
     private long getGcCount() {

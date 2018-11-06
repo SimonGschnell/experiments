@@ -1,7 +1,3 @@
-persistence_tests.txt
-metrics.txt
-plots.txt
+persistence_selections.txt
+nbactions.xml
 /target/
-.project
-.classpath
-.settings
