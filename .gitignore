@@ -1,3 +1,5 @@
 persistence_selections.txt
 nbactions.xml
 /target/
+.evosuite
+.scaffolding_list.tmp
