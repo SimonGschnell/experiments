@@ -7,7 +7,7 @@
 
     <groupId>esfinge.cnext</groupId>
     <artifactId>cnext</artifactId>
-    <version>1.0.3-evosuite-SNAPSHOT</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
 
     <properties>
