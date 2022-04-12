@@ -85,7 +85,7 @@ public class MetricRecorderLogger_ESTest_scaffolding {
 
   private static void initializeClasses() {
     org.evosuite.runtime.classhandling.ClassStateSupport.initializeClasses(MetricRecorderLogger_ESTest_scaffolding.class.getClassLoader() ,
-      "esfinge.cnext.metric.MetricRecorder",
+      "esfinge.cnext.factories.MetricRecorder",
       "esfinge.cnext.metric.MetricResult",
       "esfinge.cnext.metric.MetricRecorderLogger"
     );

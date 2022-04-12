@@ -95,7 +95,7 @@ public class SelectorWithPersistence_ESTest_scaffolding {
       "esfinge.cnext.selector.SelectorWithPersistence",
       "org.json.simple.parser.ParseException",
       "org.json.simple.JSONObject",
-      "esfinge.cnext.selector.Selector",
+      "esfinge.cnext.factories.Selector",
       "org.json.simple.parser.Yytoken",
       "esfinge.cnext.selector.SelectorRandom"
     );

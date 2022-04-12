@@ -85,7 +85,7 @@ public class SelectorRandom_ESTest_scaffolding {
 
   private static void initializeClasses() {
     org.evosuite.runtime.classhandling.ClassStateSupport.initializeClasses(SelectorRandom_ESTest_scaffolding.class.getClassLoader() ,
-      "esfinge.cnext.selector.Selector",
+      "esfinge.cnext.factories.Selector",
       "esfinge.cnext.selector.SelectorRandom"
     );
   } 

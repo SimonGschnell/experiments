@@ -85,11 +85,11 @@ public class TimeMetricsGenerator_ESTest_scaffolding {
 
   private static void initializeClasses() {
     org.evosuite.runtime.classhandling.ClassStateSupport.initializeClasses(TimeMetricsGenerator_ESTest_scaffolding.class.getClassLoader() ,
-      "esfinge.cnext.metric.MetricRecorder",
+      "esfinge.cnext.factories.MetricRecorder",
       "esfinge.cnext.metric.TimeMetricsGenerator",
       "esfinge.cnext.metric.MetricResult",
       "esfinge.cnext.metric.MetricRecorderLogger",
-      "esfinge.cnext.metric.Metrics",
+      "esfinge.cnext.factories.Metrics",
       "esfinge.cnext.metric.MetricRecorderFile"
     );
   } 

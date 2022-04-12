@@ -1,5 +1,8 @@
 package esfinge.cnext.metric;
 
+import esfinge.cnext.factories.MetricRecorder;
+import esfinge.cnext.factories.Metrics;
+
 import java.lang.management.GarbageCollectorMXBean;
 import java.lang.management.ManagementFactory;
 import java.lang.reflect.Method;

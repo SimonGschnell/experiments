@@ -27,7 +27,7 @@ public class Metrics_ESTest_scaffolding {
 
   @BeforeClass 
   public static void initEvoSuiteFramework() { 
-    org.evosuite.runtime.RuntimeSettings.className = "esfinge.cnext.metric.Metrics"; 
+    org.evosuite.runtime.RuntimeSettings.className = "esfinge.cnext.factories.Metrics";
     org.evosuite.runtime.GuiSupport.initialize(); 
     org.evosuite.runtime.RuntimeSettings.maxNumberOfThreads = 100; 
     org.evosuite.runtime.RuntimeSettings.maxNumberOfIterationsPerLoop = 10000; 
@@ -85,12 +85,12 @@ public class Metrics_ESTest_scaffolding {
 
   private static void initializeClasses() {
     org.evosuite.runtime.classhandling.ClassStateSupport.initializeClasses(Metrics_ESTest_scaffolding.class.getClassLoader() ,
-      "esfinge.cnext.metric.MetricRecorder",
+      "esfinge.cnext.factories.MetricRecorder",
       "esfinge.cnext.metric.TimeMetricsGenerator",
       "esfinge.cnext.metric.MetricResult",
       "esfinge.cnext.metric.MetricRecorderLogger",
       "esfinge.cnext.metric.MemoryMetricsGenerator",
-      "esfinge.cnext.metric.Metrics",
+      "esfinge.cnext.factories.Metrics",
       "esfinge.cnext.metric.MetricRecorderFile"
     );
   } 

@@ -3,3 +3,4 @@ nbactions.xml
 /target/
 .evosuite
 .scaffolding_list.tmp
+.idea/

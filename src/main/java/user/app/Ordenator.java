@@ -1,8 +1,8 @@
 package user.app;
 
 
-import esfinge.cnext.metric.MemoryMetrics;
-import esfinge.cnext.metric.TimeMetrics;
+import esfinge.cnext.annotations.MemoryMetrics;
+import esfinge.cnext.annotations.TimeMetrics;
 
 @TimeMetrics
 @MemoryMetrics

@@ -1,4 +1,6 @@
-package esfinge.cnext.metric;
+package esfinge.cnext.factories;
+
+import esfinge.cnext.metric.MetricResult;
 
 public interface MetricRecorder {
 
