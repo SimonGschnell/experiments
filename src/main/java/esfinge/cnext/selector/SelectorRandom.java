@@ -1,5 +1,7 @@
 package esfinge.cnext.selector;
 
+import esfinge.cnext.factories.Selector;
+
 import java.util.Random;
 
 public class SelectorRandom implements Selector {

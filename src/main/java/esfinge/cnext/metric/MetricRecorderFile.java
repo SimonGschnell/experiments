@@ -1,5 +1,7 @@
 package esfinge.cnext.metric;
 
+import esfinge.cnext.factories.MetricRecorder;
+
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;

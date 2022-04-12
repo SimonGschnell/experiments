@@ -1,5 +1,8 @@
 package esfinge.cnext.metric;
 
+import esfinge.cnext.factories.MetricRecorder;
+import esfinge.cnext.factories.Metrics;
+
 import java.lang.reflect.Method;
 import java.time.Duration;
 import java.time.Instant;

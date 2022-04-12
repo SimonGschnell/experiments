@@ -1,10 +1,10 @@
 package esfinge.cnext;
 
-import esfinge.cnext.metric.MetricRecorder;
+import esfinge.cnext.factories.MetricRecorder;
 import esfinge.cnext.metric.MetricRecorderLogger;
-import esfinge.cnext.metric.Metrics;
-import esfinge.cnext.metric.MetricsGenerator;
-import esfinge.cnext.selector.Selector;
+import esfinge.cnext.factories.Metrics;
+import esfinge.cnext.annotations.MetricsGenerator;
+import esfinge.cnext.factories.Selector;
 import esfinge.cnext.selector.SelectorRandom;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Proxy;

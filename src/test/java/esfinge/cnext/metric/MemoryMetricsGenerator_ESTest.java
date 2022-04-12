@@ -7,12 +7,9 @@ package esfinge.cnext.metric;
 
 import org.junit.Test;
 import static org.junit.Assert.*;
-import static org.evosuite.runtime.EvoAssertions.*;
-import esfinge.cnext.metric.MemoryMetricsGenerator;
-import esfinge.cnext.metric.MetricRecorder;
-import esfinge.cnext.metric.MetricRecorderFile;
-import esfinge.cnext.metric.MetricRecorderLogger;
-import esfinge.cnext.metric.MetricResult;
+
+import esfinge.cnext.factories.MetricRecorder;
+
 import java.lang.reflect.Method;
 import org.evosuite.runtime.EvoRunner;
 import org.evosuite.runtime.EvoRunnerParameters;

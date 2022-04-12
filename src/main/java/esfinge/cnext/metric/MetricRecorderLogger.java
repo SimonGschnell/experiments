@@ -1,5 +1,7 @@
 package esfinge.cnext.metric;
 
+import esfinge.cnext.factories.MetricRecorder;
+
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;

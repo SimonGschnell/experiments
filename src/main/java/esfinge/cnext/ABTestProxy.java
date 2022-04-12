@@ -1,7 +1,7 @@
 package esfinge.cnext;
 
-import esfinge.cnext.metric.Metrics;
-import esfinge.cnext.selector.Selector;
+import esfinge.cnext.factories.Metrics;
+import esfinge.cnext.factories.Selector;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.util.List;

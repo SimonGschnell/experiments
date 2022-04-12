@@ -8,11 +8,11 @@ package esfinge.cnext;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.evosuite.runtime.EvoAssertions.*;
-import esfinge.cnext.ABTestProxy;
+
 import esfinge.cnext.metric.MemoryMetricsGenerator;
-import esfinge.cnext.metric.Metrics;
+import esfinge.cnext.factories.Metrics;
 import esfinge.cnext.metric.TimeMetricsGenerator;
-import esfinge.cnext.selector.Selector;
+import esfinge.cnext.factories.Selector;
 import esfinge.cnext.selector.SelectorWithPersistence;
 import java.lang.reflect.Array;
 import java.lang.reflect.Method;

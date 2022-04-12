@@ -1,4 +1,7 @@
-package esfinge.cnext.metric;
+package esfinge.cnext.factories;
+
+import esfinge.cnext.factories.MetricRecorder;
+import esfinge.cnext.metric.MetricResult;
 
 import java.lang.reflect.Method;
 

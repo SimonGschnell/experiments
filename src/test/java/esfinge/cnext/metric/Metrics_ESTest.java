@@ -8,11 +8,9 @@ package esfinge.cnext.metric;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import static org.evosuite.runtime.EvoAssertions.*;
-import esfinge.cnext.metric.MemoryMetricsGenerator;
-import esfinge.cnext.metric.MetricRecorder;
-import esfinge.cnext.metric.MetricRecorderFile;
-import esfinge.cnext.metric.MetricRecorderLogger;
-import esfinge.cnext.metric.TimeMetricsGenerator;
+
+import esfinge.cnext.factories.MetricRecorder;
+
 import java.lang.reflect.Method;
 import org.evosuite.runtime.EvoRunner;
 import org.evosuite.runtime.EvoRunnerParameters;
@@ -32,7 +30,7 @@ public class Metrics_ESTest extends Metrics_ESTest_scaffolding {
          //
          // no message in exception (getMessage() returned null)
          //
-         verifyException("esfinge.cnext.metric.Metrics", e);
+         verifyException("esfinge.cnext.factories.Metrics", e);
       }
   }
 
@@ -77,7 +75,7 @@ public class Metrics_ESTest extends Metrics_ESTest_scaffolding {
          //
          // no message in exception (getMessage() returned null)
          //
-         verifyException("esfinge.cnext.metric.Metrics", e);
+         verifyException("esfinge.cnext.factories.Metrics", e);
       }
   }
 
@@ -92,7 +90,7 @@ public class Metrics_ESTest extends Metrics_ESTest_scaffolding {
          //
          // no message in exception (getMessage() returned null)
          //
-         verifyException("esfinge.cnext.metric.Metrics", e);
+         verifyException("esfinge.cnext.factories.Metrics", e);
       }
   }
 }

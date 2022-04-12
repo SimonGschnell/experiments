@@ -1,4 +1,4 @@
-package esfinge.cnext.selector;
+package esfinge.cnext.factories;
 
 public interface Selector {
 

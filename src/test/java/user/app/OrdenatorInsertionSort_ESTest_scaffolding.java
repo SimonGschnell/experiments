@@ -85,16 +85,16 @@ public class OrdenatorInsertionSort_ESTest_scaffolding {
 
   private static void initializeClasses() {
     org.evosuite.runtime.classhandling.ClassStateSupport.initializeClasses(OrdenatorInsertionSort_ESTest_scaffolding.class.getClassLoader() ,
-      "esfinge.cnext.metric.MetricRecorder",
+      "esfinge.cnext.factories.MetricRecorder",
       "esfinge.cnext.metric.TimeMetricsGenerator",
-      "esfinge.cnext.metric.MemoryMetrics",
+      "esfinge.cnext.annotations.MemoryMetrics",
       "esfinge.cnext.metric.MetricResult",
       "user.app.OrdenatorInsertionSort",
       "esfinge.cnext.metric.MemoryMetricsGenerator",
-      "esfinge.cnext.metric.Metrics",
+      "esfinge.cnext.factories.Metrics",
       "user.app.Ordenator",
-      "esfinge.cnext.metric.TimeMetrics",
-      "esfinge.cnext.metric.MetricsGenerator"
+      "esfinge.cnext.annotations.TimeMetrics",
+      "esfinge.cnext.annotations.MetricsGenerator"
     );
   } 
 
